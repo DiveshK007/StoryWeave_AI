@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Local outputs
+projects/
+*.txt
+
+# Secrets
+.env
+*.env
+.nim.env
