@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" font-family="Inter, Arial, sans-serif">
+  <rect width="1200" height="720" fill="#ffffff"/>
+  <style>
+    .box{fill:#f8fafc;stroke:#0f172a;stroke-width:1.5;rx:10}
+    .title{font-weight:700;fill:#0f172a}
+    .text{fill:#334155}
+    .arrow{stroke:#334155;stroke-width:2;marker-end:url(#m)}
+  </style>
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <!-- Frontend -->
+  <rect class="box" x="40" y="60" width="320" height="130"/>
+  <text class="title" x="200" y="95" text-anchor="middle">Frontend (Static UI)</text>
+  <text class="text"  x="200" y="120" text-anchor="middle">index.html (Fetch API)</text>
+  <text class="text"  x="200" y="140" text-anchor="middle">Generate Outline • Expand Scene • Export</text>
+
+  <!-- FastAPI -->
+  <rect class="box" x="420" y="40" width="360" height="170"/>
+  <text class="title" x="600" y="80" text-anchor="middle">FastAPI Orchestrator</text>
+  <text class="text"  x="600" y="105" text-anchor="middle">/ingest • /generate_outline • /expand_scene • /export</text>
+  <text class="text"  x="600" y="130" text-anchor="middle">settings.py • nim_client.py • retrieval.py</text>
+
+  <!-- FAISS -->
+  <rect class="box" x="820" y="40" width="340" height="170"/>
+  <text class="title" x="990" y="80" text-anchor="middle">Retrieval & Index</text>
+  <text class="text"  x="990" y="105" text-anchor="middle">Embeddings (E5 v5) → FAISS</text>
+  <text class="text"  x="990" y="130" text-anchor="middle">Chunked .md knowledge</text>
+
+  <!-- NIM -->
+  <rect class="box" x="420" y="260" width="740" height="210"/>
+  <text class="title" x="790" y="295" text-anchor="middle">NVIDIA NIM (Cloud Functions)</text>
+  <text class="text"  x="790" y="320" text-anchor="middle">Text LLM: ai-llama-3_1-nemotron-nano-8b-v1</text>
+  <text class="text"  x="790" y="340" text-anchor="middle">Embeddings: blueprint-nv-embedqa-e5-v5</text>
+  <text class="text"  x="790" y="360" text-anchor="middle">Switchable mock vs live</text>
+
+  <!-- Storage -->
+  <rect class="box" x="40" y="260" width="320" height="210"/>
+  <text class="title" x="200" y="295" text-anchor="middle">Storage</text>
+  <text class="text"  x="200" y="320" text-anchor="middle">/projects → story.txt</text>
+  <text class="text"  x="200" y="340" text-anchor="middle">demo_corpus/*.md</text>
+
+  <!-- Arrows -->
+  <line class="arrow" x1="360" y1="125" x2="420" y2="125"/>
+  <line class="arrow" x1="780" y1="125" x2="820" y2="125"/>
+  <line class="arrow" x1="600" y1="210" x2="600" y2="260"/>
+  <line class="arrow" x1="360" y1="320" x2="420" y2="320"/>
+</svg>
