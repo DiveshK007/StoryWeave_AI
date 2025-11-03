@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>StoryWeave AI — Minimal UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:system-ui,Arial,sans-serif;max-width:900px;margin:24px auto;padding:0 12px;line-height:1.4}
+    h1{margin:0 0 8px} .card{border:1px solid #ddd;border-radius:12px;padding:16px;margin:12px 0}
+    button{padding:10px 14px;border-radius:10px;border:1px solid #ccc;cursor:pointer}
+    textarea, input[type="text"]{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .row > *{flex:1}
+    .beats li{margin:6px 0;cursor:pointer}
+    .ok{color:#0a7c2f;font-weight:600}
+    .bad{color:#b00020;font-weight:600}
+    pre{white-space:pre-wrap;word-wrap:break-word;background:#fafafa;padding:12px;border-radius:8px;border:1px solid #eee}
+  </style>
+</head>
+<body>
+  <h1>StoryWeave AI</h1>
+  <p>Load knowledge → Generate Outline → Click a beat → Expand Scene.</p>
+
+  <div class="card">
+    <h3>1) Load knowledge (.md files)</h3>
+    <input id="files" type="file" multiple>
+    <button id="ingestBtn">Ingest</button>
+    <div id="ingestOut"></div>
+  </div>
+
+  <div class="card">
+    <h3>2) Generate outline</h3>
+    <div class="row">
+      <input id="premise" type="text" placeholder="Premise (e.g., A shy barista can pause time for 10s)">
+      <input id="genre" type="text" placeholder="Genre (optional)">
+      <input id="length" type="text" placeholder="Length (short/feature)">
+    </div>
+    <button id="outlineBtn">Generate</button>
+    <div id="outlineOut"></div>
+  </div>
+
+  <div class="card">
+    <h3>3) Expand a scene</h3>
+    <div class="row">
+      <input id="sceneIndex" type="text" placeholder="Scene index (e.g., 0)">
+      <input id="protagonist" type="text" placeholder="Protagonist (e.g., Rin)">
+    </div>
+    <button id="sceneBtn">Expand</button>
+    <pre id="sceneOut"></pre>
+  </div>
+
+<script>
+const API = location.origin;
+let scenes = [];
+let lastOutline = null;
+
+document.getElementById('ingestBtn').onclick = async () => {
+  const files = document.getElementById('files').files;
+  if (!files.length) { alert('Choose at least one .md'); return; }
+  const fd = new FormData();
+  for (const f of files) fd.append('files', f);
+  const r = await fetch(`${API}/ingest`, { method:'POST', body: fd });
+  const j = await r.json();
+  document.getElementById('ingestOut').innerHTML =
+    j.ok ? `<span class="ok">Ingested ${j.chunks} file(s)</span>` :
+           `<span class="bad">Ingest failed</span>`;
+};
+
+document.getElementById('outlineBtn').onclick = async () => {
+  const premise = document.getElementById('premise').value || 'A shy barista can pause time for 10 seconds';
+  const genre = document.getElementById('genre').value || 'urban fantasy';
+  const length = document.getElementById('length').value || 'short';
+  const r = await fetch(`${API}/generate_outline`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ premise, genre, length })
+  });
+  const j = await r.json();
+  lastOutline = j.outline;
+  const ok = j.consistency?.ok;
+  const issues = (j.consistency?.issues || []).join(', ');
+  const beats = (lastOutline?.beats || []).map((b,i)=>`<li data-idx="${i}"><b>${i}.</b> ${b.title} — <i>${b.conflict||''}</i></li>`).join('');
+  document.getElementById('outlineOut').innerHTML = `
+    <div>${ok ? '<span class="ok">Outline OK</span>' : '<span class="bad">Needs fix</span>'} ${issues?(' — '+issues):''}</div>
+    <ul class="beats">${beats}</ul>
+  `;
+  document.querySelectorAll('.beats li').forEach(li=>{
+    li.onclick = () => { document.getElementById('sceneIndex').value = li.dataset.idx; }
+  });
+};
+
+document.getElementById('sceneBtn').onclick = async () => {
+  if (!lastOutline) { alert('Generate outline first'); return; }
+  const scene_index = parseInt(document.getElementById('sceneIndex').value||'0',10);
+  const protagonist = document.getElementById('protagonist').value || 'Rin';
+  const r = await fetch(`${API}/expand_scene`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ outline: lastOutline, scene_index, protagonist })
+  });
+  const j = await r.json();
+  document.getElementById('sceneOut').textContent = j.scene_text || JSON.stringify(j,null,2);
+  const sceneText = j.scene_text || "";
+  scenes[scene_index] = sceneText;
+
+};
+</script>
+
+  <!-- existing code for Expand Scene -->
+  <pre id="sceneOut"></pre>
+
+  <!-- now add this export block -->
+  <h3>4) Export</h3>
+  <button id="exportBtn">Download .txt</button>
+  <script>
+  document.getElementById('exportBtn').onclick = async () => {
+    if (!lastOutline) { alert('Generate an outline first'); return; }
+    const r = await fetch('/export', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ outline: lastOutline, scenes })
+    });
+    if (!r.ok) { alert('Export failed'); return; }
+    const blob = await r.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'story.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+  </script>
+</body>
+</html>
+
+</body>
+</html>

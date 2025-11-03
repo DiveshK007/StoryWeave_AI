@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-nim
+  namespace: agentic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llm-nim
+  template:
+    metadata:
+      labels:
+        app: llm-nim
+    spec:
+      containers:
+        - name: llm
+          image: nvcr.io/nim/llama-3.1-nemotron-nano-8b-v1:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: NGC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ngc-api
+                  key: NGC_API_KEY

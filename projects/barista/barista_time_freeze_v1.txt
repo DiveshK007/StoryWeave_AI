@@ -1,0 +1,55 @@
+# Logline
+A shy barista can pause time for 10 seconds, but each pause steals hours from tomorrow.
+
+# Beats
+1. Hook: goal=Keep the café calm; conflict=Time jitters spill orders; outcome=Rin discovers the pause
+2. Inciting Incident: goal=Save a child from a crash; conflict=Ten-second limit nearly fails; outcome=Child saved; Rin blacks out
+3. First Threshold: goal=Use pauses to help quietly; conflict=Ringing ears, blurred vision; outcome=Rin commits to a secret rulebook
+4. Midpoint: goal=Stop a closing-time robbery; conflict=Multiple attackers exceed 10s; outcome=Wins but loses half a day tomorrow
+5. Crisis: goal=Protect a friend from a stalker; conflict=Pauses cause memory gaps; outcome=Work and friendships strain
+6. Climax: goal=Catch stalker without pausing; conflict=Must rely on wit not power; outcome=Rin succeeds; sets new limits
+7. Resolution: goal=Live with balance; conflict=Temptation to overuse; outcome=Rin keeps the gift for emergencies
+
+# Scenes
+
+## Scene 1
+[MOCK LLM]
+Scene based on: Expand the following beat into a cinematic scene. Beat: {'title': 'Hook', 'goal': 'Keep the café calm', 'conflict': 'Time jitters spill orders', 'outcome': 'Rin discovers the pause'}. Style: visceral, visual, concise action lines. Write 10-15 sentences with clear start-middle-end. End with a one-line cliffhanger. 
+…cups rattle, air crystallizes, and time thins to a silver thread…
+— End of mock output —
+
+## Scene 2
+[MOCK LLM]
+Scene based on: Expand the following beat into a cinematic scene. Beat: {'title': 'Inciting Incident', 'goal': 'Save a child from a crash', 'conflict': 'Ten-second limit nearly fails', 'outcome': 'Child saved; Rin blacks out'}. Style: visceral, visual, concise action lines. Write 10-15 sentences with clear start-middle-end. End with a one-line cliffhanger. 
+…cups rattle, air crystallizes, and time thins to a silver thread…
+— End of mock output —
+
+## Scene 3
+[MOCK LLM]
+Scene based on: Expand the following beat into a cinematic scene. Beat: {'title': 'First Threshold', 'goal': 'Use pauses to help quietly', 'conflict': 'Ringing ears, blurred vision', 'outcome': 'Rin commits to a secret rulebook'}. Style: visceral, visual, concise action lines. Write 10-15 sentences with clear start-middle-end. End with a one-line cliffhanger. 
+…cups rattle, air crystallizes, and time thins to a silver thread…
+— End of mock output —
+
+## Scene 4
+[MOCK LLM]
+Scene based on: Expand the following beat into a cinematic scene. Beat: {'title': 'Midpoint', 'goal': 'Stop a closing-time robbery', 'conflict': 'Multiple attackers exceed 10s', 'outcome': 'Wins but loses half a day tomorrow'}. Style: visceral, visual, concise action lines. Write 10-15 sentences with clear start-middle-end. End with a one-line cliffhanger. 
+…cups rattle, air crystallizes, and time thins to a silver thread…
+— End of mock output —
+
+## Scene 5
+[MOCK LLM]
+Scene based on: Expand the following beat into a cinematic scene. Beat: {'title': 'Crisis', 'goal': 'Protect a friend from a stalker', 'conflict': 'Pauses cause memory gaps', 'outcome': 'Work and friendships strain'}. Style: visceral, visual, concise action lines. Write 10-15 sentences with clear start-middle-end. End with a one-line cliffhanger. 
+…cups rattle, air crystallizes, and time thins to a silver thread…
+— End of mock output —
+
+## Scene 6
+[MOCK LLM]
+Scene based on: Expand the following beat into a cinematic scene. Beat: {'title': 'Climax', 'goal': 'Catch stalker without pausing', 'conflict': 'Must rely on wit not power', 'outcome': 'Rin succeeds; sets new limits'}. Style: visceral, visual, concise action lines. Write 10-15 sentences with clear start-middle-end. End with a one-line cliffhanger. 
+…cups rattle, air crystallizes, and time thins to a silver thread…
+— End of mock output —
+
+## Scene 7
+[MOCK LLM]
+Scene based on: Expand the following beat into a cinematic scene. Beat: {'title': 'Resolution', 'goal': 'Live with balance', 'conflict': 'Temptation to overuse', 'outcome': 'Rin keeps the gift for emergencies'}. Style: visceral, visual, concise action lines. Write 10-15 sentences with clear start-middle-end. End with a one-line cliffhanger. 
+…cups rattle, air crystallizes, and time thins to a silver thread…
+— End of mock output —

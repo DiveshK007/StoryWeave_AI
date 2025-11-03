@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: embed-nim
+  namespace: agentic
+spec:
+  selector:
+    app: embed-nim
+  ports:
+    - port: 8001
+      targetPort: 8001

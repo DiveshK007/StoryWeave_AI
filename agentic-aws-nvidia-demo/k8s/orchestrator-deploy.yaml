@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orchestrator
+  namespace: agentic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orchestrator
+  template:
+    metadata:
+      labels:
+        app: orchestrator
+    spec:
+      containers:
+        - name: api
+          image: <ECR_URI>/agentic-orchestrator:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: LLM_URL
+              value: 'http://llm-nim.agentic.svc.cluster.local:8000'
+            - name: EMBED_URL
+              value: 'http://embed-nim.agentic.svc.cluster.local:8001'

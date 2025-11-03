@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: embed-nim
+  namespace: agentic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: embed-nim
+  template:
+    metadata:
+      labels:
+        app: embed-nim
+    spec:
+      containers:
+        - name: embed
+          image: nvcr.io/nim/retrieval-embedding:latest
+          ports:
+            - containerPort: 8001
+          env:
+            - name: NGC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ngc-api
+                  key: NGC_API_KEY
