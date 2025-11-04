@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./agentic-aws-nvidia-demo/services/orchestrator
+      dockerfile: Dockerfile
+    container_name: storyweave-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://storyweave:storyweave@db:5432/storyweave
+      - NIM_API_KEY=${NIM_API_KEY:-}
+      - NIM_API_URL=${NIM_API_URL:-https://integrate.api.nvidia.com/v1}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - MIXPANEL_TOKEN=${MIXPANEL_TOKEN:-}
+      - MIXPANEL_API_SECRET=${MIXPANEL_API_SECRET:-}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ./agentic-aws-nvidia-demo/services/orchestrator/uploads:/app/uploads
+      - ./agentic-aws-nvidia-demo/services/orchestrator/indices:/app/indices
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+    networks:
+      - storyweave-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: storyweave-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+      - VITE_SENTRY_DSN=${VITE_SENTRY_DSN:-}
+      - VITE_MIXPANEL_TOKEN=${VITE_MIXPANEL_TOKEN:-}
+      - VITE_APP_ENV=${ENVIRONMENT:-development}
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - storyweave-network
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: storyweave-db
+    environment:
+      - POSTGRES_USER=storyweave
+      - POSTGRES_PASSWORD=storyweave
+      - POSTGRES_DB=storyweave
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - storyweave-network
+
+  # Redis (for pub/sub and caching)
+  redis:
+    image: redis:7-alpine
+    container_name: storyweave-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - storyweave-network
+
+volumes:
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  storyweave-network:
+    driver: bridge
