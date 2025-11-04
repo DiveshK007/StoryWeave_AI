@@ -382,14 +382,14 @@ npm run test:coverage
 │  │  WebSocket       │   │
 │  │  Auth Middleware │   │
 │  └────────┬─────────┘   │
-│           │              │
+│           │             │
 │  ┌────────▼─────────┐   │
 │  │  Business Logic  │   │
 │  │  - Story Gen     │   │
 │  │  - Characters    │   │
 │  │  - Collaboration │   │
 │  └────────┬─────────┘   │
-└───────────┼──────────────┘
+└───────────┼─────────────┘
             │
     ┌───────┴────────┐
     │                │
@@ -482,10 +482,9 @@ See [ROADMAP.md](docs/ROADMAP.md) for detailed roadmap.
 
 **StoryWeave AI Development Team**
 
-- **Lead Developer**: [Your Name]
-- **AI/ML Engineer**: [Team Member]
-- **Frontend Developer**: [Team Member]
-- **Backend Developer**: [Team Member]
+- **AI/ML Engineer**: [Dijo S Benelen]
+- **Frontend Developer**: [Divesh Kumar S]
+- **Backend Developer**: [Gokul V]
 
 ---
 
