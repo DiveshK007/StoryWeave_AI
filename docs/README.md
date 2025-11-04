@@ -16,9 +16,7 @@ Welcome to the StoryWeave AI documentation! This directory contains comprehensiv
 - [Error Tracking](./SENTRY_INTEGRATION_SUMMARY.md) - Sentry error tracking
 
 ### Development
-- [Contributing Guide](../CONTRIBUTING.md) - How to contribute
 - [CI/CD Setup](./.github/CICD_SETUP.md) - CI/CD pipeline documentation
-- [Development Workflow](../CONTRIBUTING.md#development-process) - Development process
 
 ### Deployment
 - [Docker Deployment](../README.md#-docker-deployment) - Docker setup
