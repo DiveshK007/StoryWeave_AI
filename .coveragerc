@@ -1,0 +1,29 @@
+[run]
+source = agentic-aws-nvidia-demo/services/orchestrator/app
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */alembic/*
+    */venv/*
+    */env/*
+
+[report]
+precision = 2
+show_missing = True
+skip_covered = False
+fail_under = 70
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    @abstractmethod
+
+[html]
+directory = htmlcov
+
+[xml]
+output = coverage.xml

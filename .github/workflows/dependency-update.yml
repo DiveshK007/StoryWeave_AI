@@ -1,0 +1,47 @@
+name: Dependency Update
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**/requirements.txt'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - '.github/dependabot.yml'
+
+jobs:
+  test-dependency-updates:
+    name: Test Dependency Updates
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' || contains(github.head_ref, 'dependabot')
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Test Python dependencies
+        working-directory: agentic-aws-nvidia-demo/services/orchestrator
+        continue-on-error: true
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -c "import app.main; print('Import successful')"
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Test Frontend dependencies
+        working-directory: frontend
+        continue-on-error: true
+        run: |
+          npm ci
+          npx tsc --noEmit || true
+          npm run build || true

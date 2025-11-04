@@ -1,4 +1,10 @@
 # StoryWeave AI
+
+[![CI](https://github.com/YOUR_USERNAME/StoryWeave_AI/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/StoryWeave_AI/actions/workflows/ci.yml)
+[![Test Coverage](https://codecov.io/gh/YOUR_USERNAME/StoryWeave_AI/branch/main/graph/badge.svg)](https://codecov.io/gh/YOUR_USERNAME/StoryWeave_AI)
+[![Security Scan](https://github.com/YOUR_USERNAME/StoryWeave_AI/actions/workflows/security-scan.yml/badge.svg)](https://github.com/YOUR_USERNAME/StoryWeave_AI/actions/workflows/security-scan.yml)
+[![Deploy](https://github.com/YOUR_USERNAME/StoryWeave_AI/actions/workflows/deploy.yml/badge.svg)](https://github.com/YOUR_USERNAME/StoryWeave_AI/actions/workflows/deploy.yml)
+
 Minimal RAG + LLM story tool. Ingest markdown knowledge → generate outline → expand scenes → export.
 
 ## Local run

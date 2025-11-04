@@ -1,0 +1,41 @@
+# Alembic Migrations
+
+This directory contains database migration scripts managed by Alembic.
+
+## Usage
+
+### Create a new migration
+```bash
+alembic revision --autogenerate -m "Description of changes"
+```
+
+### Apply migrations
+```bash
+alembic upgrade head
+```
+
+### Rollback migrations
+```bash
+alembic downgrade -1  # Rollback one migration
+alembic downgrade base  # Rollback all migrations
+```
+
+### View migration history
+```bash
+alembic history
+```
+
+### View current revision
+```bash
+alembic current
+```
+
+## Initial Migration
+
+To create the initial migration with all models:
+```bash
+alembic revision --autogenerate -m "Initial migration"
+```
+
+This will generate a migration file in the `versions/` directory with all the table definitions.
+

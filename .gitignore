@@ -5,12 +5,45 @@
 venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
 
 # Local outputs
 projects/
 *.txt
 
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads and indices
+uploads/
+indices/
+*.index
+
 # Secrets
 .env
 *.env
 .nim.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/

@@ -1,0 +1,180 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  python-lint:
+    name: Python Lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agentic-aws-nvidia-demo/services/orchestrator
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install linting dependencies
+        run: |
+          pip install ruff black mypy
+      
+      - name: Install project dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Run Ruff
+        run: ruff check app/
+      
+      - name: Check formatting with Black
+        run: black --check app/
+
+  python-typecheck:
+    name: Python Type Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agentic-aws-nvidia-demo/services/orchestrator
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install mypy types-requests
+      
+      - name: Run mypy
+        run: |
+          mypy app/ --ignore-missing-imports || true
+
+  python-test:
+    name: Python Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agentic-aws-nvidia-demo/services/orchestrator
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Set test environment variables
+        run: |
+          echo "USE_MOCK=1" >> $GITHUB_ENV
+          echo "DATABASE_URL=sqlite+aiosqlite:///./test.db" >> $GITHUB_ENV
+      
+      - name: Install coverage
+        run: |
+          pip install pytest-cov coverage
+      
+      - name: Run pytest with coverage
+        run: |
+          pytest --cov=app --cov-report=xml --cov-report=term-missing --cov-fail-under=70
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          flags: python
+          name: python-coverage
+          fail_ci_if_error: false
+
+  frontend-lint:
+    name: Frontend Lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run ESLint
+        run: npm run lint
+
+  frontend-typecheck:
+    name: Frontend Type Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run TypeScript type check
+        run: npx tsc --noEmit
+
+  frontend-build:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build frontend
+        run: npm run build
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/dist
+          retention-days: 7
